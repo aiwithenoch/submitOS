@@ -45,8 +45,30 @@ body {
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: space-between;
     padding: 0 12px 24px 12px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    background-color: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+.sidebar.collapsed {
+    display: none;
 }
 
 .logo-text {

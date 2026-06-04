@@ -15,11 +15,16 @@
         <aside class="sidebar">
             <div class="sidebar-top">
                 <div class="logo-container">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 4V20M4 12h16" stroke="#00357B" stroke-width="2" stroke-linecap="round"/>
-                        <circle cx="12" cy="12" r="10" stroke="#00357B" stroke-width="2" stroke-dasharray="2 4"/>
-                    </svg>
-                    <span class="logo-text">Turninspect</span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 4V20M4 12h16" stroke="#00357B" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="12" cy="12" r="10" stroke="#00357B" stroke-width="2" stroke-dasharray="2 4"/>
+                        </svg>
+                        <span class="logo-text">Turninspect</span>
+                    </div>
+                    <button id="close-sidebar-btn" class="icon-btn" aria-label="Close sidebar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
                 </div>
                 <nav class="nav-menu">
                     <a href="#" class="nav-item active">
@@ -54,9 +59,14 @@
         <div class="main-wrapper">
             <main class="main-content">
                 <header class="top-header">
-                    <div class="header-titles">
-                        <h1>Welcome back, Ai Withenoch</h1>
-                        <p>Upload a paper to begin outsmarting your teachers.</p>
+                    <div class="header-titles" style="display: flex; align-items: flex-start; gap: 16px;">
+                        <button id="open-sidebar-btn" class="icon-btn" style="display: none; margin-top: 4px;" aria-label="Open sidebar">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                        </button>
+                        <div>
+                            <h1>Welcome back, Ai Withenoch</h1>
+                            <p>Upload a paper to begin outsmarting your teachers.</p>
+                        </div>
                     </div>
                 <div class="header-actions">
                     <div class="credits-pill">
@@ -120,5 +130,6 @@
         </main>
     </div>
 </div>
+    <script src="script.js"></script>
 </body>
 </html>
