@@ -28,7 +28,8 @@ body {
 
 .app-container {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 }
 
 /* Sidebar Styles */
@@ -41,6 +42,7 @@ body {
     justify-content: space-between;
     padding: 24px 16px;
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
 }
 
 .logo-container {
@@ -165,6 +167,7 @@ body {
 /* Main Content Styles */
 .main-wrapper {
     flex: 1;
+    overflow-y: auto;
 }
 
 .main-content {
