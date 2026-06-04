@@ -1,5 +1,40 @@
 
-function showToast(message, isError = false) {
+
+async function resumePayment(docId, cost) {
+    try {
+        if (!currentUser) return;
+        
+        showToast('Initializing secure checkout...', false);
+
+        // Map cost to product ID (1000 = premium, else standard)
+        const productId = cost >= 1000 ? 'pdt_0NctF5YejRu7ZpdvrajI8' : 'pdt_0NctEvIG0q9y6YofXe0wp';
+        
+        const response = await fetch('/api/create-checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                productId,
+                customerId: currentUser.id,
+                documentId: docId
+            })
+        });
+
+        if (!response.ok) throw new Error('Failed to create checkout session');
+
+        const data = await response.json();
+        if (data.url) {
+            window.location.href = data.url;
+        } else {
+            throw new Error('No checkout URL returned');
+        }
+    } catch (error) {
+        console.error('Resume payment failed:', error);
+        showToast('Failed to resume payment: ' + error.message, true);
+    }
+}
+\nfunction showToast(message, isError = false) {
     let container = document.getElementById('toast-container');
     if (!container) {
         container = document.createElement('div');
@@ -237,7 +272,7 @@ async function loadRecentSubmissions() {
             if (doc.status === 'processing') {
                 statusBadge = `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FFF3CD; color: #856404;">PROCESSING</span>`;
             } else if (doc.status === 'pending_payment') {
-                statusBadge = `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FEE2E2; color: #DC2626;">PENDING PAYMENT</span>`;
+                statusBadge = `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FEE2E2; color: #DC2626;">PENDING PAYMENT</span> <button onclick="resumePayment('${doc.id}', ${doc.cost})" class="btn-primary" style="padding: 4px 10px; font-size: 11px; border-radius: 4px; margin-left: 8px;">Pay Now</button>`;
             } else {
                 statusBadge = `<span class="badge-done"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> DONE</span>`;
             }
@@ -301,7 +336,7 @@ function initHistory() {
             if (doc.status === 'processing') {
                 statusBadge = `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FFF3CD; color: #856404;">PROCESSING</span>`;
             } else if (doc.status === 'pending_payment') {
-                statusBadge = `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FEE2E2; color: #DC2626;">PENDING PAYMENT</span>`;
+                statusBadge = `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FEE2E2; color: #DC2626;">PENDING PAYMENT</span> <button onclick="resumePayment('${doc.id}', ${doc.cost})" class="btn-primary" style="padding: 4px 10px; font-size: 11px; border-radius: 4px; margin-left: 8px;">Pay Now</button>`;
             } else {
                 statusBadge = `<span class="badge-done"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> DONE</span>`;
             }
