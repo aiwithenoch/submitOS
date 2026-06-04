@@ -371,3 +371,25 @@ function initSettings() {
 
     loadSettings();
 }
+
+async function downloadOriginal(filePath) {
+    const { data } = window.supabaseApp.storage.from('documents').getPublicUrl(filePath);
+    if (data && data.publicUrl) {
+        window.open(data.publicUrl, '_blank');
+    } else {
+        alert('Could not download original file.');
+    }
+}
+
+async function downloadBypassed(filePath) {
+    const { data } = window.supabaseApp.storage.from('bypassed_documents').getPublicUrl(filePath);
+    if (data && data.publicUrl) {
+        window.open(data.publicUrl, '_blank');
+    } else {
+        alert('Could not download bypassed file.');
+    }
+}
+
+async function runBypass(docId) {
+    alert('Bypass architecture has not been implemented yet. This will trigger the AI bypass backend.');
+}
