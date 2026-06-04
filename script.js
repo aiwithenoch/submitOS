@@ -142,7 +142,7 @@ async function processUpload(isPremium) {
         if (uploadError) throw uploadError;
 
         // 2. Insert into Database
-        const { error: dbError } = await window.supabaseApp
+        const { data: insertedDoc, error: dbError } = await window.supabaseApp
             .from('documents')
             .insert({
                 user_id: currentUser.id,
@@ -150,13 +150,34 @@ async function processUpload(isPremium) {
                 file_path: filePath,
                 pages: currentPages,
                 cost: isPremium ? 1000 : currentPrice,
-                status: 'processing'
-            });
+                status: 'pending_payment'
+            })
+            .select()
+            .single();
 
         if (dbError) throw dbError;
 
-        alert('Document uploaded successfully and is now processing!');
-        window.location.href = 'history.html';
+        const productId = isPremium ? 'pdt_0NctF5YejRu7ZpdvrajI8' : 'pdt_0NctEvIG0q9y6YofXe0wp';
+        const response = await fetch('/api/create-checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                productId,
+                customerId: currentUser.id,
+                documentId: insertedDoc.id
+            })
+        });
+
+        if (!response.ok) throw new Error('Failed to create checkout session');
+
+        const data = await response.json();
+        if (data.url) {
+            window.location.href = data.url;
+        } else {
+            throw new Error('No checkout URL returned');
+        }
 
     } catch (error) {
         console.error('Upload failed:', error);
