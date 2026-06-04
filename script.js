@@ -302,30 +302,69 @@ function initSettings() {
         emailValue.textContent = currentUser.email;
         nameValue.textContent = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
 
-        // Edit Name Logic
+        // Edit Name Logic (Inline Editing)
         const editNameBtn = nameValue.parentElement.nextElementSibling;
-        editNameBtn.addEventListener('click', async () => {
-            const newName = prompt("Enter your new name:", nameValue.textContent);
-            if (newName && newName !== nameValue.textContent) {
-                editNameBtn.textContent = 'Saving...';
-                editNameBtn.disabled = true;
+        let isEditingName = false;
 
-                const { data, error } = await supabase.auth.updateUser({
+        editNameBtn.addEventListener('click', async () => {
+            if (!isEditingName) {
+                // Switch to edit mode
+                isEditingName = true;
+                const currentName = nameValue.textContent;
+                
+                // Create an input field
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentName;
+                input.className = 'edit-name-input';
+                input.style.padding = '4px 8px';
+                input.style.border = '1px solid var(--border-color)';
+                input.style.borderRadius = '4px';
+                input.style.fontSize = '14px';
+                input.style.width = '100%';
+                input.style.maxWidth = '250px';
+                input.style.marginTop = '4px';
+
+                // Replace span text with input
+                nameValue.innerHTML = '';
+                nameValue.appendChild(input);
+                
+                // Change button to 'Save'
+                editNameBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Save';
+                input.focus();
+
+            } else {
+                // Save mode
+                const input = nameValue.querySelector('input');
+                if (!input) return;
+                
+                const newName = input.value.trim();
+                if (!newName) {
+                    alert("Name cannot be empty");
+                    return;
+                }
+
+                editNameBtn.innerHTML = 'Saving...';
+                editNameBtn.disabled = true;
+                input.disabled = true;
+
+                const { data, error } = await window.supabaseApp.auth.updateUser({
                     data: { full_name: newName }
                 });
 
                 if (error) {
                     alert("Error updating name: " + error.message);
+                    input.disabled = false;
+                    editNameBtn.disabled = false;
+                    editNameBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Save';
                 } else {
+                    // Revert to view mode
+                    isEditingName = false;
+                    nameValue.innerHTML = '';
                     nameValue.textContent = newName;
-                    // Also update profiles table
-                    await supabase.from('profiles').update({ full_name: newName }).eq('id', currentUser.id);
-                    // Update UI globally
-                    updateUIForUser(data.user);
+                    editNameBtn.disabled = false;
+                    editNameBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit';
                 }
-
-                editNameBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit`;
-                editNameBtn.disabled = false;
             }
         });
     }
