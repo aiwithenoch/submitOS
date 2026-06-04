@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CleanSubmit Dashboard</title>
+    <title>CleanSubmit Settings</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
                     </button>
                 </div>
                 <nav class="nav-menu">
-                    <a href="index.html" class="nav-item active">
+                    <a href="index.html" class="nav-item">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         Home
                     </a>
@@ -35,7 +35,7 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                         History
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="settings.html" class="nav-item active">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                         Settings
                     </a>
@@ -58,78 +58,93 @@
         <!-- Main Content Wrapper -->
         <div class="main-wrapper">
             <main class="main-content">
-                <header class="top-header">
+                <header class="top-header" style="margin-bottom: 32px;">
                     <div class="header-titles" style="display: flex; align-items: flex-start; gap: 16px;">
                         <button id="open-sidebar-btn" class="icon-btn" style="display: none; margin-top: 4px;" aria-label="Open sidebar">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                         </button>
                         <div>
-                            <h1>Welcome back, Ai Withenoch</h1>
-                            <p>Upload a paper to begin outsmarting your teachers.</p>
+                            <h1>Settings</h1>
+                            <p>Update your account, change your password, or delete your data.</p>
                         </div>
                     </div>
-                <div class="header-actions">
-                    <div class="credits-pill">
-                        <span class="credits-count"><strong>0</strong> credits</span>
-                        <button class="btn-buy-small">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            Buy
-                        </button>
-                    </div>
-                    <a href="#" class="have-code">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="14" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="22"></line><path d="M19 8c-1.5 0-2.8-1.4-3-3-.2-1.6 1.4-3 3-3s2.8 1.4 3 3c.2 1.6-1.4 3-3 3z"></path><path d="M5 8c1.5 0 2.8-1.4 3-3 .2-1.6-1.4-3-3-3S2.2 3.4 2 5c-.2 1.6 1.4 3 3 3z"></path></svg>
-                        Have a code?
-                    </a>
-                </div>
-            </header>
+                </header>
 
-            <section class="submission-section">
-                <h2>New submission</h2>
-                <div class="upload-container">
-                    <div class="upload-box">
-                        <div class="upload-icon-wrapper">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <div class="settings-section">
+                    <h3>Account</h3>
+                    <div class="settings-card">
+                        <div class="settings-row">
+                            <div class="settings-info">
+                                <label>NAME</label>
+                                <div class="settings-value">Ai With Enoch</div>
+                            </div>
+                            <button class="btn-outline">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                Edit
+                            </button>
                         </div>
-                        <p class="upload-text"><strong>Drop your file here, or click to browse</strong></p>
-                        <p class="upload-subtext">PDF or DOCX, 300-30,000 words</p>
-                    </div>
-                    <div class="upload-action">
-                        <button class="btn-disabled">Buy a credit to upload</button>
+                        <div class="settings-divider"></div>
+                        <div class="settings-row">
+                            <div class="settings-info">
+                                <label>EMAIL</label>
+                                <div class="settings-value">aiwithenoch@gmail.com</div>
+                                <p class="settings-hint">Email changes require contacting support.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            <section class="recent-submissions-section">
-                <div class="section-header">
-                    <h2>Recent submissions</h2>
-                    <a href="#" class="view-all">View all &rarr;</a>
-                </div>
-                <div class="submission-card">
-                    <div class="submission-info">
-                        <div class="file-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#637381" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                        </div>
-                        <div class="file-details">
-                            <p class="file-name">1.0.docx</p>
-                            <p class="file-time">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                25 minutes ago
-                            </p>
+                <div class="settings-section">
+                    <h3>Password</h3>
+                    <div class="settings-card">
+                        <div class="settings-row">
+                            <div class="settings-info">
+                                <div class="settings-value">Password</div>
+                                <p class="settings-hint">Change the password used to sign in.</p>
+                            </div>
+                            <button class="btn-outline">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                Change
+                            </button>
                         </div>
                     </div>
-                    <div class="submission-stats">
-                        <span class="stat">AI <strong>22%</strong></span>
-                        <span class="stat">Sim <strong>3%</strong></span>
-                        <span class="badge-done">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            DONE
-                        </span>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Session</h3>
+                    <div class="settings-card">
+                        <div class="settings-row">
+                            <div class="settings-info">
+                                <div class="settings-value">Sign out</div>
+                                <p class="settings-hint">Sign out of CleanSubmit on this device.</p>
+                            </div>
+                            <button class="btn-outline">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                Sign out
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </section>
-        </main>
+
+                <div class="settings-section">
+                    <h3 class="danger-text">Danger zone</h3>
+                    <div class="settings-card danger-card">
+                        <div class="settings-row">
+                            <div class="settings-info">
+                                <div class="settings-value">Delete account</div>
+                                <p class="settings-hint">Permanently delete your account, history, and any unused credits. This cannot be undone.</p>
+                            </div>
+                            <button class="btn-danger">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
     </div>
-</div>
     <script src="script.js"></script>
 </body>
 </html>
