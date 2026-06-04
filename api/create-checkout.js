@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
             product_id: productId,
             quantity: quantity,
             payment_link: true, 
-            return_url: 'https://submit-os.vercel.app/billing.html?success=true',
+            return_url: documentId ? 'https://submit-os.vercel.app/history.html?success=true' : 'https://submit-os.vercel.app/billing.html?success=true',
             metadata: {
                 customer_id: customerId,
                 documentId: documentId || null
