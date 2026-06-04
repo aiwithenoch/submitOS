@@ -48,24 +48,42 @@ module.exports = async (req, res) => {
             else if (payment.product_id === 'pdt_0NctEzqe4C6kQjZDy8BaU') creditsToAdd = 150;
             else if (payment.product_id === 'pdt_0NctF5YejRu7ZpdvrajI8') creditsToAdd = 300;
 
-            const { data: profile } = await supabaseAdmin
-                .from('profiles')
-                .select('credits')
-                .eq('id', customerId)
-                .single();
-                
-            const newCredits = (profile?.credits || 0) + creditsToAdd;
+            // Check if documentId was passed
+            const documentId = payment.metadata && payment.metadata.documentId;
             
-            const { error } = await supabaseAdmin
-                .from('profiles')
-                .update({ credits: newCredits })
-                .eq('id', customerId);
+            if (documentId) {
+                // This payment was for a specific document upload
+                const { error: docError } = await supabaseAdmin
+                    .from('documents')
+                    .update({ status: 'processing' })
+                    .eq('id', documentId);
+                    
+                if (docError) {
+                    console.error('Document update error:', docError);
+                    throw docError;
+                }
+                console.log(`Successfully marked document ${documentId} as processing`);
+            } else {
+                // This payment was for buying generic credits
+                const { data: profile } = await supabaseAdmin
+                    .from('profiles')
+                    .select('credits')
+                    .eq('id', customerId)
+                    .single();
+                    
+                const newCredits = (profile?.credits || 0) + creditsToAdd;
                 
-            if (error) {
-                console.error('Supabase update error:', error);
-                throw error;
+                const { error } = await supabaseAdmin
+                    .from('profiles')
+                    .update({ credits: newCredits })
+                    .eq('id', customerId);
+                    
+                if (error) {
+                    console.error('Supabase update error:', error);
+                    throw error;
+                }
+                console.log(`Successfully added ${creditsToAdd} credits to user ${customerId}`);
             }
-            console.log(`Successfully added ${creditsToAdd} credits to user ${customerId}`);
         }
     }
 

@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
     if (typeof body === 'string') {
         body = JSON.parse(body);
     }
-    const { productId, quantity = 1, customerId } = body;
+    const { productId, quantity = 1, customerId, documentId } = body;
     
     // Use the provided Dodo Payments API Key
     const apiKey = process.env.DODO_PAYMENTS_API_KEY || 'N3zkXB9JuMuBSaYB.DA15R27MQe83w33cfO_4Qqzpbavljz9IZIPESAdIrhhgpLTN';
@@ -41,7 +41,8 @@ module.exports = async (req, res) => {
             payment_link: true, 
             return_url: 'https://submit-os.vercel.app/billing.html?success=true',
             metadata: {
-                customer_id: customerId
+                customer_id: customerId,
+                documentId: documentId || null
             }
         })
     });
