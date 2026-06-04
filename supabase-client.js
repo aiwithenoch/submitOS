@@ -3,13 +3,30 @@ const SUPABASE_URL = 'https://bduxfhafzxnvggchayzm.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_DrmfsRByqnz2jNs8pluAUQ_zQbCGIGG';
 
 // Initialize Supabase Client
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+window.supabaseApp = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // State management
 let currentUser = null;
 
+async function enforceRouteGuard() {
+    const { data: { session } } = await window.supabaseApp.auth.getSession();
+    if (session) {
+        currentUser = session.user;
+        updateUIForUser(currentUser);
+    } else {
+        currentUser = null;
+        const protectedPages = ['dashboard.html', 'billing.html', 'history.html', 'settings.html'];
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        if (protectedPages.includes(currentPage)) {
+            window.location.href = 'index.html';
+        }
+    }
+}
+
+enforceRouteGuard();
+
 // Listen for auth state changes
-supabase.auth.onAuthStateChange((event, session) => {
+window.supabaseApp.auth.onAuthStateChange((event, session) => {
     if (session) {
         currentUser = session.user;
         updateUIForUser(currentUser);
@@ -49,7 +66,7 @@ function updateUIForUser(user) {
 
 // Sign out function attached to window for easy access
 window.signOut = async function() {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await window.supabaseApp.auth.signOut();
     if (error) {
         console.error('Error signing out:', error.message);
         alert('Error signing out. Please try again.');

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'Signing in...';
             submitBtn.disabled = true;
             
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await window.supabaseApp.auth.signInWithPassword({
                 email,
                 password
             });
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'Creating account...';
             submitBtn.disabled = true;
             
-            const { data, error } = await supabase.auth.signUp({
+            const { data, error } = await window.supabaseApp.auth.signUp({
                 email,
                 password,
                 options: {

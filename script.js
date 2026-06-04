@@ -135,14 +135,14 @@ async function processUpload(isPremium) {
         const filePath = `${currentUser.id}/${fileName}`;
 
         // 1. Upload to Storage
-        const { error: uploadError } = await window.supabase.storage
+        const { error: uploadError } = await window.supabaseApp.storage
             .from('documents')
             .upload(filePath, currentFileToUpload);
 
         if (uploadError) throw uploadError;
 
         // 2. Insert into Database
-        const { error: dbError } = await window.supabase
+        const { error: dbError } = await window.supabaseApp
             .from('documents')
             .insert({
                 user_id: currentUser.id,
@@ -174,7 +174,7 @@ async function loadRecentSubmissions() {
         return;
     }
 
-    const { data, error } = await window.supabase
+    const { data, error } = await window.supabaseApp
         .from('documents')
         .select('*')
         .eq('user_id', currentUser.id)
@@ -234,7 +234,7 @@ function initHistory() {
             return;
         }
 
-        const { data, error } = await window.supabase
+        const { data, error } = await window.supabaseApp
             .from('documents')
             .select('*')
             .eq('user_id', currentUser.id)

@@ -1,0 +1,25 @@
+{
+  "name": "new-cs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "auth-forms.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiwithenoch/submitOS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/aiwithenoch/submitOS/issues"
+  },
+  "homepage": "https://github.com/aiwithenoch/submitOS#readme",
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "playwright": "^1.60.0"
+  }
+}
