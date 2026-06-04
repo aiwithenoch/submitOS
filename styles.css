@@ -891,3 +891,37 @@ h2 {
 .auth-footer a:hover {
     text-decoration: underline;
 }
+
+
+/* Toast Notifications */
+#toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.toast {
+    background: white;
+    color: var(--text-primary);
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--primary-color);
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: toastSlideIn 0.3s forwards ease-out;
+}
+.toast.error {
+    border-left-color: #ef4444;
+}
+@keyframes toastSlideIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes toastSlideOut {
+    to { opacity: 0; transform: translateY(20px); }
+}

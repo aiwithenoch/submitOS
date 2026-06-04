@@ -1,3 +1,20 @@
+
+function showToast(message, isError = false) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+    const toast = document.createElement('div');
+    toast.className = 'toast' + (isError || message.toLowerCase().includes('fail') || message.toLowerCase().includes('error') ? ' error' : '');
+    toast.innerText = message;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.animation = 'toastSlideOut 0.3s forwards ease-in';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
 document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.querySelector('.sidebar');
     const closeSidebarBtn = document.getElementById('close-sidebar-btn');
@@ -55,7 +72,7 @@ function initDashboard() {
         if (!file) return;
 
         if (!file.name.endsWith('.docx') && !file.name.endsWith('.doc')) {
-            alert('Please upload a valid Word document (.docx or .doc).');
+            showToast('Please upload a valid Word document (.docx or .doc).');
             return;
         }
 
@@ -94,16 +111,16 @@ function initDashboard() {
                     uploadSection.style.display = 'none';
                     pricingResults.style.display = 'block';
                 } else {
-                    alert("Could not read page count metadata. Please try another file.");
+                    showToast("Could not read page count metadata. Please try another file.");
                     resetUpload(uploadActionBtn);
                 }
             } catch (error) {
                 console.error("Error parsing document:", error);
-                alert("There was an error parsing the document.");
+                showToast("There was an error parsing the document.");
                 resetUpload(uploadActionBtn);
             }
         } else {
-            alert("Legacy .doc files cannot be parsed in the browser. Please convert to .docx.");
+            showToast("Legacy .doc files cannot be parsed in the browser. Please convert to .docx.");
             resetUpload(uploadActionBtn);
         }
     });
@@ -181,7 +198,7 @@ async function processUpload(isPremium) {
 
     } catch (error) {
         console.error('Upload failed:', error);
-        alert('Failed to upload document: ' + error.message);
+        showToast('Failed to upload document: ' + error.message);
     }
 }
 
@@ -361,7 +378,7 @@ function initSettings() {
                 
                 const newName = input.value.trim();
                 if (!newName) {
-                    alert("Name cannot be empty");
+                    showToast("Name cannot be empty");
                     return;
                 }
 
@@ -374,7 +391,7 @@ function initSettings() {
                 });
 
                 if (error) {
-                    alert("Error updating name: " + error.message);
+                    showToast("Error updating name: " + error.message);
                     input.disabled = false;
                     editNameBtn.disabled = false;
                     editNameBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Save';
@@ -398,7 +415,7 @@ async function downloadOriginal(filePath) {
     if (data && data.publicUrl) {
         window.open(data.publicUrl, '_blank');
     } else {
-        alert('Could not download original file.');
+        showToast('Could not download original file.');
     }
 }
 
@@ -407,10 +424,10 @@ async function downloadBypassed(filePath) {
     if (data && data.publicUrl) {
         window.open(data.publicUrl, '_blank');
     } else {
-        alert('Could not download bypassed file.');
+        showToast('Could not download bypassed file.');
     }
 }
 
 async function runBypass(docId) {
-    alert('Bypass architecture has not been implemented yet. This will trigger the AI bypass backend.');
+    showToast('Bypass architecture has not been implemented yet. This will trigger the AI bypass backend.');
 }

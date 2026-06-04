@@ -36,8 +36,10 @@ module.exports = async (req, res) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            product_id: productId,
-            quantity: quantity,
+            product_cart: [{
+                product_id: productId,
+                quantity: quantity
+            }],
             payment_link: true, 
             return_url: documentId ? 'https://submit-os.vercel.app/history.html?success=true' : 'https://submit-os.vercel.app/billing.html?success=true',
             metadata: {
