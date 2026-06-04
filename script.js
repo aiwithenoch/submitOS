@@ -34,7 +34,8 @@ async function resumePayment(docId, cost) {
         showToast('Failed to resume payment: ' + error.message, true);
     }
 }
-\nfunction showToast(message, isError = false) {
+
+function showToast(message, isError = false) {
     let container = document.getElementById('toast-container');
     if (!container) {
         container = document.createElement('div');
