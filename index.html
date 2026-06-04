@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -112,12 +113,55 @@
                         </div>
                         <p class="upload-text"><strong>Drop your file here, or click to browse</strong></p>
                         <p class="upload-subtext">PDF or DOCX, 300-30,000 words</p>
-                    </div>
-                    <div class="upload-action">
-                        <button class="btn-disabled">Buy a credit to upload</button>
+                        </div>
+                        <input type="file" id="documentUpload" accept=".doc,.docx" style="display: none;">
+                        <div class="upload-action">
+                            <button class="btn-disabled" id="uploadActionBtn" onclick="document.getElementById('documentUpload').click()">Upload document</button>
+                        </div>
                     </div>
                 </div>
-            </section>
+
+                <!-- Pricing Results UI (Hidden initially) -->
+                <div id="pricingResults" style="display: none; margin-top: 32px;">
+                    <div style="margin-bottom: 24px;">
+                        <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 8px;">Document Analysis Complete</h2>
+                        <p style="color: var(--text-secondary); font-size: 14px;">We detected <strong id="detectedPages">0</strong> pages in your document. Choose your processing priority below.</p>
+                    </div>
+                    
+                    <div class="pricing-cards">
+                        <!-- Standard Tier -->
+                        <div class="pricing-card">
+                            <div class="pricing-header">
+                                <h3>Standard Processing</h3>
+                                <div class="pricing-price" id="standardPrice">₵0</div>
+                            </div>
+                            <ul class="pricing-features">
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Full document review</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Turnitin similarity report</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Sequential queue processing</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Pay online instantly</li>
+                            </ul>
+                            <button class="btn-primary full-width" style="margin-top: 24px;">Get Started</button>
+                        </div>
+
+                        <!-- Premium Tier -->
+                        <div class="pricing-card premium-card">
+                            <div class="popular-badge">Most Popular</div>
+                            <div class="pricing-header">
+                                <h3>Skip the Queue</h3>
+                                <div class="pricing-price">₵1,000</div>
+                                <p class="pricing-subtitle">Jump to the front, any page count</p>
+                            </div>
+                            <ul class="pricing-features">
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Immediate priority processing</strong></li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Full document review</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Turnitin similarity report</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Pay online instantly</li>
+                            </ul>
+                            <button class="btn-primary full-width" style="margin-top: 24px; background-color: white; color: var(--primary-color);">Get Started</button>
+                        </div>
+                    </div>
+                </div>
 
             <section class="recent-submissions-section">
                 <div class="section-header">
