@@ -20,8 +20,11 @@
   "homepage": "https://github.com/aiwithenoch/submitOS#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.107.0",
+    "cors": "^2.8.6",
+    "dodopayments": "^2.35.0",
     "glob": "^13.0.6",
     "jszip": "^3.10.1",
+    "micro": "^10.0.1",
     "playwright": "^1.60.0"
   }
 }
