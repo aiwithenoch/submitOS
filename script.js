@@ -233,9 +233,14 @@ async function loadRecentSubmissions() {
 
     data.forEach(doc => {
         const date = new Date(doc.created_at).toLocaleDateString();
-        const statusBadge = doc.status === 'processing' 
-            ? `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FFF3CD; color: #856404;">PROCESSING</span>`
-            : `<span class="badge-done"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> DONE</span>`;
+        let statusBadge = '';
+            if (doc.status === 'processing') {
+                statusBadge = `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FFF3CD; color: #856404;">PROCESSING</span>`;
+            } else if (doc.status === 'pending_payment') {
+                statusBadge = `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FEE2E2; color: #DC2626;">PENDING PAYMENT</span>`;
+            } else {
+                statusBadge = `<span class="badge-done"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> DONE</span>`;
+            }
 
         const card = document.createElement('div');
         card.className = 'submission-card';
@@ -292,9 +297,14 @@ function initHistory() {
 
         data.forEach(doc => {
             const date = new Date(doc.created_at).toLocaleDateString();
-            const statusBadge = doc.status === 'processing' 
-                ? `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FFF3CD; color: #856404;">PROCESSING</span>`
-                : `<span class="badge-done"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> DONE</span>`;
+            let statusBadge = '';
+            if (doc.status === 'processing') {
+                statusBadge = `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FFF3CD; color: #856404;">PROCESSING</span>`;
+            } else if (doc.status === 'pending_payment') {
+                statusBadge = `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FEE2E2; color: #DC2626;">PENDING PAYMENT</span>`;
+            } else {
+                statusBadge = `<span class="badge-done"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> DONE</span>`;
+            }
 
             const card = document.createElement('div');
             card.className = 'submission-card';
