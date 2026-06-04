@@ -40,6 +40,17 @@ module.exports = async (req, res) => {
                 product_id: productId,
                 quantity: quantity
             }],
+            customer: {
+                email: 'customer_' + customerId.substring(0, 8) + '@example.com',
+                name: 'CleanSubmit Customer'
+            },
+            billing: {
+                city: 'New York',
+                country: 'US',
+                state: 'NY',
+                street: '123 Main St',
+                zipcode: '10001'
+            },
             payment_link: true, 
             return_url: documentId ? 'https://submit-os.vercel.app/history.html?success=true' : 'https://submit-os.vercel.app/billing.html?success=true',
             metadata: {
