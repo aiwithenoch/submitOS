@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CleanSubmit - Sign In</title>
+    <title>CleanSubmit - Create Account</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,27 +22,33 @@
 
     <main class="auth-main">
         <div class="auth-card">
-            <h1>Sign in</h1>
-            <p class="auth-subtitle">Welcome back. Sign in to upload papers and download your reports.</p>
+            <h1>Create your account</h1>
+            <p class="auth-subtitle">Create an account to upload papers and receive official similarity results.</p>
             
             <form action="dashboard.html" method="GET" class="auth-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Jane Doe" required>
+                </div>
+                
                 <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="email" id="email" placeholder="you@email.com" required>
                 </div>
                 
                 <div class="form-group">
-                    <div class="label-row">
-                        <label for="password">Password</label>
-                        <a href="#" class="forgot-password">Forgot password?</a>
-                    </div>
-                    <input type="password" id="password" placeholder="••••••••" required>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="At least 8 characters" required>
                 </div>
                 
-                <button type="submit" class="btn-primary full-width" style="padding: 12px; font-size: 14px; margin-top: 8px;">Sign In</button>
+                <p class="auth-hint">We'll email you a 6-digit code to confirm your address.</p>
+                
+                <button type="submit" class="btn-primary full-width" style="padding: 12px; font-size: 14px; margin-top: 8px;">Create account</button>
             </form>
+            
+            <p class="auth-terms">By creating an account, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
         </div>
-        <p class="auth-footer">New to CleanSubmit? <a href="register.html">Create an account</a></p>
+        <p class="auth-footer">Already have an account? <a href="index.html">Sign in</a></p>
     </main>
 </body>
 </html>
