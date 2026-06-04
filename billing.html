@@ -109,7 +109,7 @@
                                 <li style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Full document review</li>
                                 <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Sequential queue processing</li>
                             </ul>
-                            <button class="btn-primary full-width" style="margin-top: 24px;">Pay online instantly</button>
+                            <button class="btn-primary full-width" style="margin-top: 24px;" onclick="checkout('pdt_0NctEvIG0q9y6YofXe0wp')">Pay online instantly</button>
                         </div>
 
                         <!-- Premium Tier -->
@@ -124,7 +124,7 @@
                                 <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Immediate priority processing</strong></li>
                                 <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Full document review</li>
                             </ul>
-                            <button class="btn-primary full-width" style="margin-top: 24px; background-color: white; color: var(--primary-color);">Pay online instantly</button>
+                            <button class="btn-primary full-width" style="margin-top: 24px; background-color: white; color: var(--primary-color);" onclick="checkout('pdt_0NctF5YejRu7ZpdvrajI8')">Pay online instantly</button>
                         </div>
                     </div>
                 </section>
@@ -157,5 +157,60 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
     <script src="script.js"></script>
+
+    <script>
+        async function checkout(productId) {
+            const userStr = localStorage.getItem('currentUser');
+            if (!userStr) {
+                alert('Please sign in first.');
+                window.location.href = 'index.html';
+                return;
+            }
+            const user = JSON.parse(userStr);
+            const customerId = user.id;
+
+            try {
+                const btn = event.target;
+                const originalText = btn.innerText;
+                btn.innerText = 'Redirecting...';
+                btn.disabled = true;
+
+                const response = await fetch('/api/create-checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        productId,
+                        customerId
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create checkout session');
+                }
+
+                const data = await response.json();
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    throw new Error('No checkout URL returned');
+                }
+            } catch (error) {
+                console.error('Checkout error:', error);
+                alert('Error creating checkout: ' + error.message);
+                event.target.innerText = 'Pay online instantly';
+                event.target.disabled = false;
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                alert('Payment successful! Your credits will be updated shortly.');
+            }
+        });
+    </script>
 </body>
+
 </html>
