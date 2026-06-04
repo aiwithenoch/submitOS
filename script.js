@@ -165,8 +165,8 @@ async function processUpload(isPremium) {
 }
 
 async function loadRecentSubmissions() {
-    const section = document.querySelector('.recent-submissions-section');
-    if (!section) return;
+    const listContainer = document.getElementById('recentSubmissionsList');
+    if (!listContainer) return;
 
     // Wait until user is loaded
     if (!currentUser) {
@@ -186,15 +186,10 @@ async function loadRecentSubmissions() {
         return;
     }
 
-    const cardsContainer = section.querySelectorAll('.submission-card');
-    cardsContainer.forEach(c => c.remove()); // clear old static ones
+    listContainer.innerHTML = '';
 
     if (data.length === 0) {
-        const noData = document.createElement('p');
-        noData.style.color = 'var(--text-secondary)';
-        noData.style.fontSize = '14px';
-        noData.textContent = "No submissions yet.";
-        section.appendChild(noData);
+        listContainer.innerHTML = '<p style="color: var(--text-secondary); font-size: 14px;">No submissions yet.</p>';
         return;
     }
 
@@ -225,13 +220,13 @@ async function loadRecentSubmissions() {
                 ${statusBadge}
             </div>
         `;
-        section.appendChild(card);
+        listContainer.appendChild(card);
     });
 }
 
 function initHistory() {
-    const tableBody = document.querySelector('.history-table tbody');
-    if (!tableBody) return; // Not on history page
+    const listContainer = document.getElementById('historySubmissionsList');
+    if (!listContainer) return; // Not on history page
 
     async function fetchHistory() {
         if (!currentUser) {
@@ -247,45 +242,44 @@ function initHistory() {
 
         if (error) {
             console.error('Failed to load history:', error);
-            tableBody.innerHTML = '<tr><td colspan="5">Failed to load history.</td></tr>';
+            listContainer.innerHTML = '<p>Failed to load history.</p>';
             return;
         }
 
-        tableBody.innerHTML = '';
+        listContainer.innerHTML = '';
         if (data.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 32px;">No submissions yet.</td></tr>';
+            listContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 32px;">No submissions yet.</p>';
             return;
         }
 
         data.forEach(doc => {
             const date = new Date(doc.created_at).toLocaleDateString();
             const statusBadge = doc.status === 'processing' 
-                ? `<span style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FFF3CD; color: #856404;">Processing</span>`
-                : `<span class="badge-done" style="padding: 4px 8px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Done</span>`;
+                ? `<span class="badge-processing" style="font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: #FFF3CD; color: #856404;">PROCESSING</span>`
+                : `<span class="badge-done"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> DONE</span>`;
 
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#637381" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                        <span style="font-weight: 500; color: var(--text-primary);">${doc.file_name}</span>
+            const card = document.createElement('div');
+            card.className = 'submission-card';
+            card.innerHTML = `
+                <div class="submission-info">
+                    <div class="file-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#637381" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </div>
-                </td>
-                <td><span style="color: var(--text-secondary);">${date}</span></td>
-                <td>
-                    <div style="display: flex; gap: 12px;">
-                        <span style="font-size: 13px; color: var(--text-secondary);">AI: <strong style="color: var(--text-primary);">${doc.ai_score || 0}%</strong></span>
-                        <span style="font-size: 13px; color: var(--text-secondary);">Sim: <strong style="color: var(--text-primary);">${doc.similarity_score || 0}%</strong></span>
+                    <div class="file-details">
+                        <p class="file-name">${doc.file_name}</p>
+                        <p class="file-time">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            ${date}
+                        </p>
                     </div>
-                </td>
-                <td>${statusBadge}</td>
-                <td>
-                    <button class="icon-btn" title="Download report" ${doc.status === 'processing' ? 'disabled style="opacity: 0.5;"' : ''}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    </button>
-                </td>
+                </div>
+                <div class="submission-stats">
+                    <span class="stat">AI <strong>${doc.ai_score || 0}%</strong></span>
+                    <span class="stat">Sim <strong>${doc.similarity_score || 0}%</strong></span>
+                    ${statusBadge}
+                </div>
             `;
-            tableBody.appendChild(tr);
+            listContainer.appendChild(card);
         });
     }
 
